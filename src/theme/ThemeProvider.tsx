@@ -1,7 +1,4 @@
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
-import { useColorScheme } from 'react-native';
-
-import { usePreferences } from '@/store/preferences';
 
 import {
   darkColors,
@@ -60,10 +57,10 @@ const ThemeContext = createContext<Theme>(buildTheme('light'));
  * web, and updates instantly when the phone's setting changes.
  */
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const system = useColorScheme();
-  const preference = usePreferences((s) => s.themePreference);
-  const scheme = resolveScheme(preference, system);
-  const theme = useMemo(() => buildTheme(scheme), [scheme]);
+  // Harbour is intentionally light-mode only. Keep the whole app, navigation,
+  // cards and status bar on the same light palette regardless of device settings.
+  const scheme: ColorScheme = 'light';
+  const theme = useMemo(() => buildTheme(scheme), []);
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 }
 

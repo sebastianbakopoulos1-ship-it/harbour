@@ -1,13 +1,13 @@
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle, Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
-import { LogoMark, Text } from '@/components/ui';
+import { LogoMark, NswGovernmentMark, Text } from '@/components/ui';
 import { credentialPalettes, useTheme } from '@/theme';
 import type { Credential } from '@/types';
 import { formatDate } from '@/utils/dates';
 
 /**
- * A wallet card. Uses Harbour's own branding and fictional data.
+ * A wallet card using NSW Government crest on licence cards and Service NSW mark on memberships.
  *
  * Two original looks, chosen from the credential kind:
  *  - "licence"  — a dark charcoal card with a red accent wave (driver/photo/
@@ -26,7 +26,7 @@ export function CredentialCard({ credential: c, holderName, mini = false }: { cr
 }
 
 /* ---------------------------------------------------------------------------
- * Licence style — dark card, red accent wave, Harbour mark.
+ * Licence style — dark card, red accent wave, NSW Government crest.
  * ------------------------------------------------------------------------- */
 function LicenceCard({ credential: c, holderName, mini }: { credential: Credential; holderName: string; mini: boolean }) {
   const { colors } = useTheme();
@@ -50,7 +50,7 @@ function LicenceCard({ credential: c, holderName, mini }: { credential: Credenti
             {c.title}
           </Text>
         </View>
-        <LogoMark size={mini ? 24 : 30} />
+        <NswGovernmentMark size={mini ? 30 : 42} />
       </View>
 
       <View style={styles.licenceBottom}>

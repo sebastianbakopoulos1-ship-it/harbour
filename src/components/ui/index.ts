@@ -5,7 +5,7 @@ export { Glyph } from './Glyph';
 export { Icon, iconNames, type IconName } from './Icon';
 export { Screen, ScreenHeader, SectionHeader } from './Layout';
 export { ListGroup, ListRow } from './ListRow';
-export { LogoMark, Wordmark } from './Logo';
+export { LogoMark, NswGovernmentMark, Wordmark } from './Logo';
 export { Pill } from './Pill';
 export { PressableScale } from './PressableScale';
 export { SegmentedControl } from './SegmentedControl';
