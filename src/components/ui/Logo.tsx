@@ -1,5 +1,4 @@
 import { Image, StyleSheet, View } from 'react-native';
-import { useTheme } from '@/theme';
 
 /** Service NSW emblem, cropped from the transparent wordmark asset. */
 export function LogoMark({ size = 32 }: { size?: number }) {
@@ -38,27 +37,18 @@ export function NswGovernmentMark({ size = 42 }: { size?: number }) {
 }
 
 export function Wordmark({ size = 34 }: { size?: number }) {
-  const { scheme } = useTheme();
   return (
-    <View style={[
-      styles.wordmarkPlate,
-      scheme === 'dark' && styles.wordmarkPlateDark,
-      { minHeight: size + (scheme === 'dark' ? 12 : 0) },
-    ]}>
-      <Image
-        source={{ uri: SERVICE_NSW_LOGO }}
-        style={[styles.serviceNswLogo, { width: size * (270 / 118), height: size }]}
-        resizeMode="contain"
-        accessible
-        accessibilityLabel="Service NSW"
-      />
-    </View>
+    <Image
+      source={{ uri: SERVICE_NSW_LOGO }}
+      style={[styles.serviceNswLogo, { width: size * (270 / 118), height: size }]}
+      resizeMode="contain"
+      accessible
+      accessibilityLabel="Service NSW"
+    />
   );
 }
 
 const styles = StyleSheet.create({
   serviceNswLogo: { flexShrink: 0 },
-  wordmarkPlate: { alignItems: 'center', justifyContent: 'center', borderRadius: 8 },
-  wordmarkPlateDark: { backgroundColor: '#FFFFFF', paddingHorizontal: 8, paddingVertical: 6 },
   governmentLogoPlate: { alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderRadius: 4, padding: 4 },
 });
