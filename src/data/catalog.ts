@@ -25,7 +25,7 @@ export interface ServiceCategory {
 export const serviceCategories: ServiceCategory[] = [
   { id: 'all', title: 'Browse everything', blurb: 'Every demo service in one A–Z list.', hue: 210, icon: 'grid', items: [] },
   { id: 'driving', title: 'Cars, bikes and boats', blurb: 'Registration, fines, demerits and the demo licences in your wallet.', hue: 350, icon: 'car', items: [
-    { label: 'Check or renew registration', route: '/(tabs)' }, { label: 'Pay a penalty notice', route: '/fines' }, { label: 'See demerit points', route: '/fines' }, { label: 'Your demo boat licence', route: '/credential/c6' },
+    { label: 'Check or renew registration', route: '/vehicles' }, { label: 'Pay a penalty notice', route: '/fines' }, { label: 'See demerit points', route: '/fines' }, { label: 'Your driver licence', route: '/credential/c1' },
   ] },
   { id: 'savings', title: 'Save on the everyday', blurb: 'Find discounts and rebates you might be missing.', hue: 30, icon: 'piggy', items: [
     { label: 'Savings checklist', route: null }, { label: 'Energy bill rebates', route: null }, { label: 'Transport cost relief', route: null },
@@ -40,7 +40,7 @@ export const serviceCategories: ServiceCategory[] = [
     { label: 'Rental bond', route: null }, { label: 'Building approvals', route: null }, { label: 'Housing support', route: null },
   ] },
   { id: 'outdoors', title: 'Outdoors and on the water', blurb: 'Fishing and boating licences, park passes and campsites.', hue: 175, icon: 'fish', items: [
-    { label: 'Your demo fishing licence', route: '/credential/c3' }, { label: 'Your demo boat licence', route: '/credential/c6' }, { label: 'Park passes', route: null }, { label: 'Book a campsite', route: null },
+    { label: 'Fishing licences', route: null }, { label: 'Boat licences', route: null }, { label: 'Park passes', route: null }, { label: 'Book a campsite', route: null },
   ] },
   { id: 'health', title: 'Health and wellbeing', blurb: 'Where to start when you or someone you care for needs support.', hue: 345, icon: 'heart', items: [
     { label: 'Find a clinic', route: null }, { label: 'Mental health support', route: null }, { label: 'Carer resources', route: null },
@@ -68,7 +68,7 @@ export interface Featured {
 }
 
 export const featuredItems: Featured[] = [
-  { id: 'ft1', title: 'Rego due? Renew in a tap', hue: 350, icon: 'car', route: '/vehicle/v1' },
+  { id: 'ft1', title: 'Rego due? Renew in a tap', hue: 350, icon: 'car', route: '/vehicles' },
   { id: 'ft2', title: 'Star cards for your home screen', hue: 175, icon: 'star', route: '/(tabs)/wallet' },
   { id: 'ft3', title: 'Set reminders your way', hue: 30, icon: 'bell', route: '/notifications' },
   { id: 'ft4', title: 'Tell us how we’re doing', hue: 245, icon: 'message', route: '/help' },

@@ -56,7 +56,7 @@ export default function WalletTab() {
             <View style={{ gap: spacing[4] }}>
               {list.map((c) => (
                 <PressableScale key={c.id} onPress={() => router.push(`/credential/${c.id}`)} accessibilityRole="button" accessibilityLabel={`Open ${c.title}`} scaleTo={0.985}>
-                  <CredentialCard credential={c} holderName={holderName} />
+                  <CredentialCard credential={c} holderName={holderName} photoUri={data.profile.photoUri} />
                 </PressableScale>
               ))}
             </View>

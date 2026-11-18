@@ -1,8 +1,9 @@
+import { Image } from 'expo-image';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle, Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
 import { LogoMark, Text } from '@/components/ui';
-import { credentialPalettes, useTheme } from '@/theme';
+import { credentialPalettes } from '@/theme';
 import type { Credential } from '@/types';
 import { formatDate } from '@/utils/dates';
 
@@ -16,23 +17,23 @@ import { formatDate } from '@/utils/dates';
  *
  * `mini` is the compact version shown in carousels.
  */
-export function CredentialCard({ credential: c, holderName, mini = false }: { credential: Credential; holderName: string; mini?: boolean }) {
+export function CredentialCard({ credential: c, holderName, photoUri, mini = false }: { credential: Credential; holderName: string; photoUri?: string; mini?: boolean }) {
   const isLicence = /licence|card/i.test(c.kind);
   return isLicence ? (
-    <LicenceCard credential={c} holderName={holderName} mini={mini} />
+    <LicenceCard credential={c} holderName={holderName} photoUri={photoUri} mini={mini} />
   ) : (
     <MembershipCard credential={c} holderName={holderName} mini={mini} />
   );
 }
 
 /* ---------------------------------------------------------------------------
- * Licence style — dark card, red accent wave, Harbour mark.
+ * Licence style — dark card, red accent wave, Harbour mark, holder photo.
  * ------------------------------------------------------------------------- */
-function LicenceCard({ credential: c, holderName, mini }: { credential: Credential; holderName: string; mini: boolean }) {
-  const { colors } = useTheme();
-  const red = colors.brand;
+function LicenceCard({ credential: c, holderName, photoUri, mini }: { credential: Credential; holderName: string; photoUri?: string; mini: boolean }) {
+  const red = '#D7153A';
   const redDark = '#9E0F2B';
   const bg = '#272C36';
+  const showPhoto = c.photo && !!photoUri;
 
   return (
     <View style={[styles.card, mini && styles.mini, { backgroundColor: bg }]} accessible accessibilityRole="image" accessibilityLabel={c.title}>
@@ -41,7 +42,7 @@ function LicenceCard({ credential: c, holderName, mini }: { credential: Credenti
         <Path d="M0 192 Q 80 170 170 188 T 320 182 V200 H0 Z" fill={red} />
       </Svg>
 
-      <View style={styles.top}>
+      <View style={styles.licenceRow}>
         <View style={{ flex: 1 }}>
           <Text variant="label" style={styles.kindDark} numberOfLines={1}>
             {c.kind}
@@ -49,24 +50,29 @@ function LicenceCard({ credential: c, holderName, mini }: { credential: Credenti
           <Text variant={mini ? 'headline' : 'title'} style={styles.nameDark} numberOfLines={2}>
             {c.title}
           </Text>
-        </View>
-        <LogoMark size={mini ? 24 : 30} />
-      </View>
-
-      <View style={styles.licenceBottom}>
-        {!mini ? (
-          <View>
-            <Text variant="label" style={styles.fieldLabelDark}>
-              Holder
-            </Text>
-            <Text variant="bodyStrong" style={styles.fieldValueDark} numberOfLines={1}>
-              {holderName}
+          <View style={styles.licenceBottom}>
+            {!mini ? (
+              <View>
+                <Text variant="label" style={styles.fieldLabelDark}>
+                  Holder
+                </Text>
+                <Text variant="bodyStrong" style={styles.fieldValueDark} numberOfLines={1}>
+                  {holderName}
+                </Text>
+              </View>
+            ) : null}
+            <Text variant="bodyStrong" style={[styles.fieldValueDark, { marginTop: mini ? 0 : 8 }]}>
+              Expiry: {formatDate(c.expiry)}
             </Text>
           </View>
-        ) : null}
-        <Text variant="bodyStrong" style={[styles.fieldValueDark, { marginTop: mini ? 0 : 8 }]}>
-          Expiry: {formatDate(c.expiry)}
-        </Text>
+        </View>
+
+        <View style={styles.licenceRight}>
+          {showPhoto ? (
+            <Image source={{ uri: photoUri }} style={[styles.photo, mini && styles.photoMini]} contentFit="cover" />
+          ) : null}
+          <LogoMark size={mini ? 22 : 28} />
+        </View>
       </View>
     </View>
   );
@@ -141,9 +147,13 @@ const styles = StyleSheet.create({
   fieldLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 10, letterSpacing: 0.8 },
   fieldValue: { color: '#FFFFFF', marginTop: 2 },
   // Licence (on dark)
+  licenceRow: { flex: 1, flexDirection: 'row', gap: 14 },
+  licenceRight: { alignItems: 'flex-end', justifyContent: 'space-between' },
+  photo: { width: 64, height: 80, borderRadius: 8, backgroundColor: 'rgba(255,255,255,0.1)' },
+  photoMini: { width: 46, height: 58, borderRadius: 6 },
   kindDark: { color: 'rgba(255,255,255,0.6)', letterSpacing: 1 },
   nameDark: { color: '#FFFFFF', marginTop: 2 },
-  licenceBottom: { marginTop: 'auto' },
+  licenceBottom: { marginTop: 'auto', paddingTop: 10 },
   fieldLabelDark: { color: 'rgba(255,255,255,0.55)', fontSize: 10, letterSpacing: 0.8 },
   fieldValueDark: { color: '#FFFFFF', marginTop: 2 },
 });

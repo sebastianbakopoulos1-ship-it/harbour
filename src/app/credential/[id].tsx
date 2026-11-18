@@ -45,7 +45,7 @@ export default function CredentialDetail() {
         />
       }
     >
-      <CredentialCard credential={credential} holderName={holderName} />
+      <CredentialCard credential={credential} holderName={holderName} photoUri={data.profile.photoUri} />
 
       {credential.inWallet ? (
         <Card style={{ marginTop: spacing[4], alignItems: 'center', gap: spacing[3] }}>

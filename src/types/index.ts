@@ -21,6 +21,8 @@ export interface Profile {
   phone: string;
   address: string;
   dob: IsoDate;
+  /** The holder's photo as a local data URL. Stays on the device; never uploaded. */
+  photoUri?: string;
 }
 
 /** A demonstration wallet credential (never a real licence or ID). */

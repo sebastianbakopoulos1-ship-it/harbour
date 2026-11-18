@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREFERENCES_STORAGE_KEY, usePreferences } from '@/store/preferences';
 
 describe('preferences store', () => {
-  test('defaults to following the phone', () => {
-    expect(usePreferences.getState().themePreference).toBe('system');
+  test('defaults to light mode', () => {
+    expect(usePreferences.getState().themePreference).toBe('light');
   });
 
   test('saves the theme choice to device storage', async () => {
@@ -16,6 +16,6 @@ describe('preferences store', () => {
     expect(raw).not.toBeNull();
     const saved = JSON.parse(raw as string);
     expect(saved.state).toEqual({ themePreference: 'dark' }); // only data, no functions
-    expect(saved.version).toBe(1);
+    expect(saved.version).toBe(2);
   });
 });

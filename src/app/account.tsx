@@ -1,9 +1,10 @@
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ConfirmDialog, type ConfirmState } from '@/components/ConfirmDialog';
-import { Button, Card, ListGroup, ListRow, Screen, ScreenHeader, SectionHeader, SegmentedControl, Text, Toggle } from '@/components/ui';
+import { Button, Card, Icon, ListGroup, ListRow, Screen, ScreenHeader, SectionHeader, SegmentedControl, Text, Toggle } from '@/components/ui';
 import { useAppData,useAppDataSnapshot } from '@/store/appData';
 import { usePreferences } from '@/store/preferences';
 import { useTheme } from '@/theme';
@@ -24,12 +25,16 @@ export default function AccountScreen() {
 
   return (
     <Screen header={<ScreenHeader title="Profile and settings" back />}>
-      <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
-        <View style={[styles.avatar, { backgroundColor: colors.brand }]}>
-          <Text variant="headline" style={{ color: colors.onBrand, fontSize: 24 }}>
-            {initials(profile.firstName, profile.lastName)}
-          </Text>
-        </View>
+      <Card onPress={() => router.push('/profile-edit')} accessibilityLabel="Edit your details" style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+        {profile.photoUri ? (
+          <Image source={{ uri: profile.photoUri }} style={styles.avatar} contentFit="cover" />
+        ) : (
+          <View style={[styles.avatar, styles.avatarFallback, { backgroundColor: colors.brand }]}>
+            <Text variant="headline" style={{ color: colors.onBrand, fontSize: 24 }}>
+              {initials(profile.firstName, profile.lastName)}
+            </Text>
+          </View>
+        )}
         <View style={{ flex: 1 }}>
           <Text variant="headline">
             {profile.firstName} {profile.lastName}
@@ -38,9 +43,10 @@ export default function AccountScreen() {
             {profile.email}
           </Text>
         </View>
+        <Icon name="pencil" size={20} color={colors.text3} />
       </Card>
 
-      <SectionHeader title="Personal details" />
+      <SectionHeader title="Personal details" action={{ label: 'Edit', onPress: () => router.push('/profile-edit') }} />
       <Card>
         <View style={styles.grid}>
           <KeyValue label="Phone" value={profile.phone} />
@@ -118,7 +124,8 @@ function KeyValue({ label, value, full }: { label: string; value: string; full?:
 }
 
 const styles = StyleSheet.create({
-  avatar: { width: 64, height: 64, borderRadius: 32, alignItems: 'center', justifyContent: 'center' },
+  avatar: { width: 64, height: 64, borderRadius: 32 },
+  avatarFallback: { alignItems: 'center', justifyContent: 'center' },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
   cell: { width: '50%', marginBottom: 16 },
   full: { width: '100%' },

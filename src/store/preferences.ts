@@ -26,16 +26,21 @@ export const PREFERENCES_STORAGE_KEY = 'harbour.preferences';
 export const usePreferences = create<PreferencesState>()(
   persist(
     (set) => ({
-      themePreference: 'system',
+      themePreference: 'light',
       setThemePreference: (themePreference) => set({ themePreference }),
     }),
     {
       name: PREFERENCES_STORAGE_KEY,
-      version: 1,
+      version: 2,
       storage: createJSONStorage(() => AsyncStorage),
       // Only persist data, never functions.
       partialize: (s) => ({ themePreference: s.themePreference }),
-      migrate: (persisted) => persisted as PreferencesState,
+      // v2 defaults the app to light mode (a saved explicit Light/Dark choice is kept).
+      migrate: (persisted, version) => {
+        const state = persisted as Partial<PreferencesState>;
+        if (version < 2 && state.themePreference === 'system') state.themePreference = 'light';
+        return state as PreferencesState;
+      },
     },
   ),
 );

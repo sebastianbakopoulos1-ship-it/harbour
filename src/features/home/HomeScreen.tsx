@@ -78,7 +78,7 @@ export function HomeScreen() {
               accessibilityLabel={`Open ${c.title}`}
               style={styles.favItem}
             >
-              <CredentialCard credential={c} holderName={`${data.profile.firstName} ${data.profile.lastName}`} mini />
+              <CredentialCard credential={c} holderName={`${data.profile.firstName} ${data.profile.lastName}`} photoUri={data.profile.photoUri} mini />
             </PressableScale>
           ))}
           <PressableScale
