@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import Svg, { Path, Rect } from 'react-native-svg';
 
 import { useTheme } from '@/theme';
@@ -6,8 +6,7 @@ import { useTheme } from '@/theme';
 import { Text } from './Text';
 
 /**
- * Harbour's original mark: an arch over water.
- * Deliberately not based on any government emblem or existing logo.
+ * Harbour's original mark is retained for any legacy surfaces that still use it.
  */
 export function LogoMark({ size = 32 }: { size?: number }) {
   const { colors } = useTheme();
@@ -26,17 +25,22 @@ export function LogoMark({ size = 32 }: { size?: number }) {
   );
 }
 
-export function Wordmark({ size = 32 }: { size?: number }) {
+// Transparent PNG supplied for this project; embedded as a data URI so it works
+// on iOS, Android and web without requiring an extra Metro asset configuration.
+const SERVICE_NSW_LOGO = 'data:image/png;base64,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';
+
+export function Wordmark() {
   return (
-    <View style={styles.row} accessibilityRole="header" accessibilityLabel="Harbour">
-      <LogoMark size={size} />
-      <Text variant="headline" style={{ fontSize: size * 0.6, lineHeight: size * 0.75 }}>
-        Harbour
-      </Text>
-    </View>
+    <Image
+      source={{ uri: SERVICE_NSW_LOGO }}
+      style={styles.serviceNswLogo}
+      resizeMode="contain"
+      accessible
+      accessibilityLabel="Service NSW"
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  serviceNswLogo: { width: 130, height: 57 },
 });
